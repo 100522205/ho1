@@ -1,23 +1,25 @@
 data;
 
-SET BUSES   := ;  # 01 ... m
-SET FRANJAS := ;  # 01 ... n
+set BUSES   := 01 02 03 04 05;
+set FRANJAS := 01 02 03;
 
-param kd := ; 
-param kp := ;
+param kd := 3;
+param kp := 30;
 
-param Distancia : # 01 . . . m :=
-# 01  value1
-# .
-# .
-# .
-#  m  valuem ;
+param Distancia :=
+01 100
+02 200
+03 150
+04 250
+05 300
+;
 
-param Distancia : # 01 . . . m :=
-# 01  value1
-# .
-# .
-# .
-#  m  valuem ;
+param Pasajeros :=
+01 20
+02 40
+03 15
+04 30
+05 35
+;
 
 end;
