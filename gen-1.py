@@ -31,7 +31,7 @@ with open(salida, "w") as f:
     f.write("data;\n\n")
 
     # Conjuntos
-    f.write("set BUSES   := " + " ".join([f"{i+1:02d}" for i in range(m)]) + ";\n")
+    f.write("set BUSES := " + " ".join([f"{i+1:02d}" for i in range(m)]) + ";\n")
     # Se vería así: set BUSES := 01 02 03 ... 0m;
     f.write("set FRANJAS := " + " ".join([f"{i+1:02d}" for i in range(n)]) + ";\n\n")
     # Se vería así: set FRANJAS := 01 02 03 ... 0n;
@@ -87,15 +87,42 @@ for linea in output:
         variables = "Nº variables de decisión o " + linea.strip()
     if "Columns" in linea:
         restricciones = "Nº restricciones o " + linea.strip()
-    # Buscar variables asignadas: +++ x[i, j]  *  1  ++++
-    # ...
-    # Buscar variables no asignadas: +++ y[i] * 1 +++
-    # ...
+    # vamos a buscar líneas con x[i,j] o y[i] con regex
+    var_re = re.compile(r'x\[\s*(\d+)\s*,\s*(\d+)\s*\]|y\[\s*(\d+)\s*\]')
+    # si es x: grupos 1 y 2 contienen bus y franja
+    # si es y: grupo 3 contiene bus
+    m = var_re.search(linea)
+    if m:
+        start, end = m.span() # span da las posiciones de inicio y fin de la variable en la línea
+        post = linea[end:]  # texto a la derecha de la variable
+        # buscar el primer número en la porción posterior -> Activity
+        nums_post = re.findall(r"\b[01]\b", post)
+        if nums_post:
+            activity = nums_post[0]
+            if activity == "1":
+                if m.group(1) and m.group(2):
+                    bus = m.group(1)
+                    franja = m.group(2)
+                    asignados.append((bus, franja))
+                elif m.group(3):
+                    bus = m.group(3)
+                    no_asignados.append(bus)
 
 print(objetivo + "\n")
 print(variables + "\n")
 print(restricciones + "\n")
-print("Buses asignados a franjas horarias:\n")
-# ...
+print("Buses asignados a franjas:\n")
+if asignados:
+    for item in asignados:
+        print("Autobús " + str(item[0]) + " → Franja " + str(item[1]))
+else:
+    print("No se encontraron asignaciones óptimas.")
+if no_asignados:
+    print("\n")
+    print("Autobuses sin asignar:")
+    for item in no_asignados:
+        print("Autobús " + str(item) + "\n")
+else:
+    print("\nTodos los autobuses fueron asignados correctamente.\n")
 
-# Como usar gen-1.py desde terminal de VSCode: Camino a python.exe/python.exe camino a gen-1.py/gen-1.py datos.in data_model.dat
+# Como usar gen-1.py desde terminal de VSCode: Camino-a-python.exe/python.exe camino-a-gen-1.py/gen-1.py datos.in data_model.dat

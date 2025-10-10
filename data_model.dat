@@ -1,6 +1,6 @@
 data;
 
-set BUSES   := 01 02 03 04 05;
+set BUSES := 01 02 03 04 05;
 set FRANJAS := 01 02 03;
 
 param kd := 3;
