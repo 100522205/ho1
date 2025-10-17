@@ -80,17 +80,18 @@ with open("output.txt", "r") as f:
 
 asignados = []
 no_asignados = []
+# vamos a buscar líneas con x[i,j] o y[i] con regex
+var_re = re.compile(r'x\[\s*(\d+)\s*,\s*(\d+)\s*\]|y\[\s*(\d+)\s*\]')
+# si es x: grupos 1 y 2 contienen bus y franja
+# si es y: grupo 3 contiene bus
 for linea in output:
     if "Objective" in linea:
         objetivo = linea.strip()
     if "Rows" in linea:
-        variables = "Nº variables de decisión o " + linea.strip()
+        restr = int(re.findall(r'\d+', linea.strip())[0])
+        restr = "Nº restriccones o Rows: " + str(restr - 1)  # restamos 1 por la fila de objetivo
     if "Columns" in linea:
-        restricciones = "Nº restricciones o " + linea.strip()
-    # vamos a buscar líneas con x[i,j] o y[i] con regex
-    var_re = re.compile(r'x\[\s*(\d+)\s*,\s*(\d+)\s*\]|y\[\s*(\d+)\s*\]')
-    # si es x: grupos 1 y 2 contienen bus y franja
-    # si es y: grupo 3 contiene bus
+        vars = "Nº variables de decisión o " + linea.strip()
     m = var_re.search(linea)
     if m:
         start, end = m.span() # span da las posiciones de inicio y fin de la variable en la línea
@@ -109,8 +110,8 @@ for linea in output:
                     no_asignados.append(bus)
 
 print(objetivo + "\n")
-print(variables + "\n")
-print(restricciones + "\n")
+print(restr + "\n")
+print(vars + "\n")
 print("Buses asignados a franjas:\n")
 if asignados:
     for item in asignados:
@@ -125,4 +126,7 @@ if no_asignados:
 else:
     print("\nTodos los autobuses fueron asignados correctamente.\n")
 
-# Como usar gen-1.py desde terminal de VSCode: Camino-a-python.exe/python.exe camino-a-gen-1.py/gen-1.py datos.in data_model.dat
+# Como usar gen-1.py desde terminal de VSCode si no está python en el path del sistema: 
+# Camino-a-python.exe/python.exe camino-a-gen-1.py/gen-1.py datos.in data_model.dat
+# Si python está en el path del sistema:
+# python camino-a-gen-1.py/gen-1.py datos.in data_model.dat
