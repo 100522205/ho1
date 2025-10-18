@@ -22,8 +22,8 @@ with open(entrada, "r") as f:
     lineas = [line.strip() for line in f.readlines() if line.strip()]
 
 n, m = map(int, lineas[0].split())
-kd, kp = map(int, lineas[1].split())
-distancias = list(map(int, lineas[2].split()))
+kd, kp = map(float, lineas[1].split())
+distancias = list(map(float, lineas[2].split()))
 pasajeros = list(map(int, lineas[3].split()))
 
 # --- Generación del fichero .dat ---
@@ -69,13 +69,13 @@ print(f"Fichero de datos generado correctamente: {salida}")
 
 # --- Ejecución del modelo con GLPK ---
 # Se asume que glpsol está en el PATH del sistema
-comando = f'glpsol -m parte-2-1.mod -d "{salida}" -o output.txt'
+comando = f'glpsol -m parte-2-1.mod -d "{salida}" -o gen-1_output.txt'
 print(f"Ejecutando: {comando}\n")
 os.system(comando)
 print("\n")
 
 # Ahora mostramos en pantalla el contenido que se pide en el enunciado
-with open("output.txt", "r") as f:
+with open("gen-1_output.txt", "r") as f:
     output = f.readlines()
 
 asignados = []
