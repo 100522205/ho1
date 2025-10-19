@@ -193,7 +193,7 @@ def main():
 
     # Salida por pantalla
     if objetivo:
-        print(objetivo + "\n")
+        print("\n\n" + objetivo + "\n")
     if restr:
         print(restr + "\n")
     if vars_info:
