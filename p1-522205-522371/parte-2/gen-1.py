@@ -20,11 +20,14 @@ salida = sys.argv[2]
 
 with open(entrada, "r") as f:
     lineas = [line.strip() for line in f.readlines() if line.strip()]
-
-n, m = map(int, lineas[0].split())
-kd, kp = map(float, lineas[1].split())
-distancias = list(map(float, lineas[2].split()))
-pasajeros = list(map(int, lineas[3].split()))
+try:
+    n, m = map(int, lineas[0].split())
+    kd, kp = map(float, lineas[1].split())
+    distancias = list(map(float, lineas[2].split()))
+    pasajeros = list(map(int, lineas[3].split()))
+except Exception as e:
+    print("Error al leer el fichero de entrada:", e)
+    sys.exit(1)
 
 # --- Generación del fichero .dat ---
 with open(salida, "w") as f:
@@ -126,7 +129,6 @@ if no_asignados:
 else:
     print("\nTodos los autobuses fueron asignados correctamente.\n")
 
-# Como usar gen-1.py desde terminal de VSCode si no está python en el path del sistema: 
-# Camino-a-python.exe/python.exe camino-a-gen-1.py/gen-1.py datos.in data_model.dat
-# Si python está en el path del sistema:
-# python camino-a-gen-1.py/gen-1.py datos.in data_model.dat
+# Se debe abrir la terminal en la carpeta parte-2 para ejecutar el script
+# En Windows con python en el path del sistema: py gen-1.py gen-1_tests/datos.in data_model.dat
+# En Linux sí funciona ./gen-1.py gen-1_tests/datos.in data_model.dat
