@@ -127,11 +127,12 @@ def main():
             f.write("(" + ",".join(tup) + ")\n")
         f.write(";\n\n")
 
-        # param O as triples (taller franja value)
+        # Cambio: param O as triples (franja taller value)
         f.write("param O :=\n")
-        for t in range(u):
-            for s in range(n):
-                f.write(f"{talleres[t]} {franjas[s]} {O[t][s]}\n")
+        for s in range(n):
+            for t in range(u):
+                # Cambio: franja taller value
+                f.write(f"{franjas[s]} {talleres[t]} {O[t][s]}\n")
         f.write(";\n\n")
 
         # param C as triples (bus bus value)
