@@ -130,5 +130,5 @@ else:
     print("\nTodos los autobuses fueron asignados correctamente.\n")
 
 # Se debe abrir la terminal en la carpeta parte-2 para ejecutar el script
-# En Windows con python en el path del sistema: py gen-1.py gen-1_tests/datos.in data_model.dat
-# En Linux sí funciona ./gen-1.py gen-1_tests/datos.in data_model.dat
+# En Windows con python en el path del sistema: py gen-1.py datos.in data_model.dat
+# En Linux sí funciona ./gen-1.py datos.in data_model.dat
